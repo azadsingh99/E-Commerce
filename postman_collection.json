@@ -1,0 +1,233 @@
+{
+  "info": {
+    "_postman_id": "e5e3f5a5-7f7f-4e4c-8b7b-9c9e9c9e9c9e",
+    "name": "E-Commerce API",
+    "description": "API collection for the E-Commerce fullstack application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/products?page=1&category=fashion&minPrice=50&maxPrice=200&sort=price-low-high",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api","products"],
+              "query": [
+                {"key":"page","value":"1"},
+                {"key":"category","value":"fashion"},
+                {"key":"minPrice","value":"50"},
+                {"key":"maxPrice","value":"200"},
+                {"key":"sort","value":"price-low-high"}
+              ]
+            },
+            "description": "Get paginated products with filters. Example shows fashion items between $50-$200 sorted by price low to high."
+          }
+        },
+        {
+          "name": "Get All Products with Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/products?category=electronics&minPrice=10&maxPrice=100&sort=price_asc&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "electronics",
+                  "description": "Filter by category"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "10",
+                  "description": "Minimum price filter"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "100",
+                  "description": "Maximum price filter"
+                },
+                {
+                  "key": "sort",
+                  "value": "price_asc",
+                  "description": "Sort order (price_asc, price_desc, latest)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of items per page"
+                }
+              ]
+            },
+            "description": "Fetches products with various filters applied"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/products/{{productId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "products", "{{productId}}"]
+            },
+            "description": "Fetches a single product by its ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"New Product\",\n  \"price\": 29.99,\n  \"description\": \"This is a new product description\",\n  \"category\": \"electronics\",\n  \"image\": \"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg\",\n  \"rating\": {\n    \"rate\": 4.5,\n    \"count\": 120\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/products",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "products"]
+            },
+            "description": "Creates a new product"
+          },
+          "response": []
+        }
+      ],
+      "description": "Product-related API endpoints"
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key":"session-id","value":"test-session-123","description":"Unique session ID"},
+              {"key":"Content-Type","value":"application/json"}
+            ],
+            "body": {
+              "mode":"raw",
+              "raw":"{\n  \"productId\": \"507f1f77bcf86cd799439011\",\n  \"quantity\": 2\n}",
+              "description":"Example: Adding 2 units of product with ID 507f1f77bcf86cd799439011"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/cart/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api","cart","add"]
+            }
+          }
+        },
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "session-id",
+                "value": "test-session",
+                "description": "Session ID for cart identification"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/cart",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart"]
+            },
+            "description": "Fetches the current cart contents"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "session-id",
+                "value": "test-session",
+                "description": "Session ID for cart identification"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/cart/remove/{{productId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart", "remove", "{{productId}}"]
+            },
+            "description": "Removes a product from the cart"
+          },
+          "response": []
+        }
+      ],
+      "description": "Cart-related API endpoints"
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/categories",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "categories"]
+            },
+            "description": "Fetches all available product categories"
+          },
+          "response": []
+        }
+      ],
+      "description": "Category-related API endpoints"
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "description": "The base URL for API requests"
+    },
+    {
+      "key": "productId",
+      "value": "",
+      "description": "ID of a product to use in requests"
+    }
+  ]
+}
