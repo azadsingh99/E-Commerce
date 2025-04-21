@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://e-commerce-wcli.onrender.com/api';
 const SESSION_ID = 'test-session'; // In production, use a proper session management system
 
 export const fetchCart = createAsyncThunk(
